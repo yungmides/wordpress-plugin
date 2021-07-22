@@ -1,3 +1,8 @@
 mysql
-wp-content
 .idea
+
+wp-content/*
+!wp-content/plugins/
+
+wp-content/plugins/*
+!wp-content/plugins/esgi-weather/
