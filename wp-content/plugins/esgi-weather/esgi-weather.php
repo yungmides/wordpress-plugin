@@ -32,6 +32,14 @@ function weather_deactivation() {
 register_activation_hook(__FILE__, 'weather_activation');
 register_deactivation_hook(__FILE__, 'weather_deactivation');
 
+function esgi_weather_enqueues() {
+    wp_enqueue_script('plugin.js', '/wp-content/plugins/esgi-weather/js/plugin.js');
+    wp_enqueue_style('plugin.css', '/wp-content/plugins/esgi-weather/css/plugin.css');
+}
+
+add_action('wp_enqueue_scripts','esgi_weather_enqueues');
+
+
 require plugin_dir_path(__FILE__) . 'includes/class-esgi-weather.php';
 
 function run_weather() {
@@ -58,20 +66,21 @@ class esgi_widget extends WP_Widget
         echo $args['before_widget'];
 
         $city = $instance['city'];
-        $country = $instance['country'];
+//        $country = $instance['country'];
         $backgroundColor = $instance['backgroundColor'];
         $widgetWidth = $instance['widgetWidth'];
         $textColor = $instance['textColor'];
 
-        echo '<div class="esgi_widget weather_widget_wrap"
+        echo '<div class="esgi_widget weather_widget_wrap" id="esgi-widget"
                  data-text-color="' . $textColor . '"
                  data-background="' . $backgroundColor . '"
                  data-width="' . $widgetWidth . '"
-                 data-city="' . $city . '"
-                 data-country="' . $country . '">
+                 data-city="' . $city . '">
     
                 <div class="weather_widget_placeholder"></div>
             </div>';
+
+//        echo var_dump($this->api($city));
 
         echo $args['after_widget'];
     }
@@ -82,7 +91,7 @@ class esgi_widget extends WP_Widget
     {
         // print_r($instance);
         $city = !empty($instance['city']) ? $instance['city'] : 'Paris';
-        $country = !empty($instance['country']) ? $instance['country'] : 'France';
+//        $country = !empty($instance['country']) ? $instance['country'] : 'France';
         $backgroundColor = !empty($instance['backgroundColor']) ? $instance['backgroundColor'] : '#becffb';
         $textColor = !empty($instance['textColor']) ? $instance['textColor'] : '#000000';
 
@@ -102,12 +111,12 @@ class esgi_widget extends WP_Widget
                            name="<?php echo $this->get_field_name('city'); ?>"
                            value="<?php echo esc_attr($city); ?>"/>
                 </div>
-                <div class="form-line">
-                    <label class="text-label" for="<?php echo $this->get_field_id('country'); ?>">Pays :</label>
-                    <input type="text" id="<?php echo $this->get_field_id('country'); ?>"
-                           name="<?php echo $this->get_field_name('country'); ?>"
-                           value="<?php echo esc_attr($country); ?>"/>
-                </div>
+<!--                <div class="form-line">-->
+<!--                    <label class="text-label" for="--><?php //echo $this->get_field_id('country'); ?><!--">Pays :</label>-->
+<!--                    <input type="text" id="--><?php //echo $this->get_field_id('country'); ?><!--"-->
+<!--                           name="--><?php //echo $this->get_field_name('country'); ?><!--"-->
+<!--                           value="--><?php //echo esc_attr($country); ?><!--"/>-->
+<!--                </div>-->
             </div>
 
             <div class="form-section">
@@ -158,13 +167,25 @@ class esgi_widget extends WP_Widget
             $instance['city'] = sanitize_text_field(strip_tags($new_instance['city']));
         }
 
-        if (!empty($new_instance['country'])) {
-            $instance['country'] = sanitize_text_field(strip_tags($new_instance['country']));
-        }
+//        if (!empty($new_instance['country'])) {
+//            $instance['country'] = sanitize_text_field(strip_tags($new_instance['country']));
+//        }
         $instance['backgroundColor'] = sanitize_hex_color(strip_tags($new_instance['backgroundColor']));
         $instance['textColor'] = sanitize_hex_color(strip_tags($new_instance['textColor']));
         $instance['widgetWidth'] = sanitize_text_field(strip_tags($new_instance['widgetWidth']));
         return $instance;
+    }
+
+    public function api($city) {
+        $apiKey = "2e144d72721a5fea8f59e8a4300e551e";
+        $infos = wp_retrieve_body(wp_request_get("http://api.openweathermap.org/data/2.5/weather?q=" . $city . "&lang=fr&units=metric&APPID=" . $apiKey));
+        if (is_array($infos)) {
+            // La requête s'est bien passé
+            var_dump($infos);
+            return $infos;
+        }
+        //Erreur
+        return $infos;
     }
 }
 
