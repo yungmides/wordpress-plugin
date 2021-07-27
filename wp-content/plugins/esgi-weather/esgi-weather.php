@@ -175,18 +175,6 @@ class esgi_widget extends WP_Widget
         $instance['widgetWidth'] = sanitize_text_field(strip_tags($new_instance['widgetWidth']));
         return $instance;
     }
-
-    public function api($city) {
-        $apiKey = "2e144d72721a5fea8f59e8a4300e551e";
-        $infos = wp_retrieve_body(wp_request_get("http://api.openweathermap.org/data/2.5/weather?q=" . $city . "&lang=fr&units=metric&APPID=" . $apiKey));
-        if (is_array($infos)) {
-            // La requête s'est bien passé
-            var_dump($infos);
-            return $infos;
-        }
-        //Erreur
-        return $infos;
-    }
 }
 
 // Register the widget.

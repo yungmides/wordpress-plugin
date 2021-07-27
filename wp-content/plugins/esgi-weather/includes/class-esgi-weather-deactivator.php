@@ -5,7 +5,7 @@ class ESGI_Weather_Deactivator {
      */
     public static function deactivate() {
         global $wpdb;
-        $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix} weather_cities;");
+        $wpdb->query("DROP TABLE IF EXISTS ". $wpdb->prefix . "weather_cities;");
 
 
     }
