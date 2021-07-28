@@ -177,6 +177,26 @@ class esgi_widget extends WP_Widget
     }
 }
 
+function shortcode_weather($atts) {
+    $a = shortcode_atts(array(
+            'backgroundColor' => '#becffb',
+            'textColor' => '#000000',
+            'city' => 'Paris',
+            'width' => '100'
+    ), $atts);
+
+    return '<div class="esgi_widget weather_widget_wrap" id="esgi-widget"
+                 data-text-color="' . $a['textColor'] . '"
+                 data-background="' . $a['backgroundColor'] . '"
+                 data-width="' . $a['width'] . '"
+                 data-city="' . $a['city'] . '">
+    
+                <div class="weather_widget_placeholder"></div>
+            </div>';
+}
+
+add_shortcode('weather', 'shortcode_weather');
+
 // Register the widget.
 function jpen_register_esgi_widget()
 {
