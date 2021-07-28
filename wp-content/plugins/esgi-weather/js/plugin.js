@@ -1,4 +1,3 @@
-console.log('TEST 1234');
 
 document.addEventListener('DOMContentLoaded', async function () {
     const esgi_widget = document.getElementById('esgi-widget');
@@ -7,8 +6,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const text_color = esgi_widget.getAttribute('data-text-color');
     const background = esgi_widget.getAttribute('data-background');
 
-    widget_root.style.backgroundColor = background;
-    widget_root.style.color = text_color;
+    esgi_widget.style.backgroundColor = background;
+    esgi_widget.style.color = text_color;
 
 
     const title = document.createElement('h1');
@@ -16,8 +15,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const desc = document.createElement('p');
     const error_element = document.createElement('p');
     error_element.style.color = 'red';
-
-    const data = fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&lang=fr&units=metric&APPID=2e144d72721a5fea8f59e8a4300e551e`)
+// 2e144d72721a5fea8f59e8a4300e551e
+    const data = fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&lang=fr&units=metric&APPID=${weather_object.apiKey}`)
         .then((response) => response.json())
         .then((d) => {
             if (d.cod === 200) {

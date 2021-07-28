@@ -62,7 +62,7 @@ class ESGI_Weather{
             echo "<input id='esgi_weather_setting_api_key' name='esgi_weather_options[api_key]' type='text' value='" . esc_attr( $options['api_key'] ) . "' />";
         }
 
-        add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
+        add_action('admin_menu', 'wpdocs_register_my_custom_menu_page' );
         add_action('admin_init', 'esgi_weather_register_settings');
     }
     

@@ -34,6 +34,10 @@ register_deactivation_hook(__FILE__, 'weather_deactivation');
 
 function esgi_weather_enqueues() {
     wp_enqueue_script('plugin.js', '/wp-content/plugins/esgi-weather/js/plugin.js');
+    wp_localize_script('plugin.js', 'weather_object', array(
+            'city' => esc_attr(get_option('esgi_weather_options')['city']),
+            'apiKey' => esc_attr(get_option('esgi_weather_options')['api_key']),
+    ));
     wp_enqueue_style('plugin.css', '/wp-content/plugins/esgi-weather/css/plugin.css');
 }
 
@@ -179,15 +183,16 @@ class esgi_widget extends WP_Widget
 
 function shortcode_weather($atts) {
     $a = shortcode_atts(array(
-            'backgroundColor' => '#becffb',
-            'textColor' => '#000000',
+            'backgroundcolor' => '#becffb',
+            'textcolor' => '#000000',
             'city' => 'Paris',
             'width' => '100'
     ), $atts);
 
+    var_dump($atts);
     return '<div class="esgi_widget weather_widget_wrap" id="esgi-widget"
-                 data-text-color="' . $a['textColor'] . '"
-                 data-background="' . $a['backgroundColor'] . '"
+                 data-text-color="' . $a['textcolor'] . '"
+                 data-background="' . $a['backgroundcolor'] . '"
                  data-width="' . $a['width'] . '"
                  data-city="' . $a['city'] . '">
     
