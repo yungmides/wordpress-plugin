@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const esgi_widget = document.getElementById('esgi-widget');
     const widget_root = esgi_widget.parentElement;
-    const city = esgi_widget.getAttribute('data-city');
+    const city = weather_object.city;
     const text_color = esgi_widget.getAttribute('data-text-color');
     const background = esgi_widget.getAttribute('data-background');
 
