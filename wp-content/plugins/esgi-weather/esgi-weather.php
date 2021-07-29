@@ -108,22 +108,6 @@ class esgi_widget extends WP_Widget
         ?>
         <div class="esgi_weather_form">
             <div class="form-section">
-                <h3>Localisation</h3>
-                <div class="form-line">
-                    <label class="text-label" for="<?php echo $this->get_field_id('city'); ?>">Ville :</label>
-                    <input type="text" id="<?php echo $this->get_field_id('city'); ?>"
-                           name="<?php echo $this->get_field_name('city'); ?>"
-                           value="<?php echo esc_attr($city); ?>"/>
-                </div>
-<!--                <div class="form-line">-->
-<!--                    <label class="text-label" for="--><?php //echo $this->get_field_id('country'); ?><!--">Pays :</label>-->
-<!--                    <input type="text" id="--><?php //echo $this->get_field_id('country'); ?><!--"-->
-<!--                           name="--><?php //echo $this->get_field_name('country'); ?><!--"-->
-<!--                           value="--><?php //echo esc_attr($country); ?><!--"/>-->
-<!--                </div>-->
-            </div>
-
-            <div class="form-section">
                 <h3>Style</h3>
 
                 <div class="form-line">
@@ -189,7 +173,6 @@ function shortcode_weather($atts) {
             'width' => '100'
     ), $atts);
 
-    var_dump($atts);
     return '<div class="esgi_widget weather_widget_wrap" id="esgi-widget"
                  data-text-color="' . $a['textcolor'] . '"
                  data-background="' . $a['backgroundcolor'] . '"
